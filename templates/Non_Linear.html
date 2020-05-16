@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Model</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Non-Linear Regression</h1>
+    <p>In statistics, nonlinear regression is a form of regression analysis in which observational data are modeled by a function which is a nonlinear combination of the model parameters and depends on one or more independent variables. The data are fitted by a method of successive approximations.</p>
+    <p>We're going to try and fit a non-linear model to the datapoints corresponding to China's GDP from 1960 to 2014. We download a dataset with two columns, the first, a year between 1960 and 2014, the second, China's corresponding annual gross domestic income in US dollars for that year. </p>
+    <p>Input Year (range 1960-2014) and the model Outputs estimated GDP</p>
+    <img src="static/images/Non_Linear.png" class="center" > 
+    {% if elements|length < 1 %}
+    <h4>There are no entries</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Year</th>
+            <th>Predicted GDP</th>
+            <th>Action</th>
+        </tr>
+        {% for ele in elements %}
+            <tr>
+                <td>{{ele.year}}</td>
+                <td>{{ele.gdp}}</td>
+                <td>
+                    <a href='/Non_Linear/delete/{{ele.id}}'>Delete</a>
+                    <br>
+                    <a href='/Non_Linear/update/{{ele.id}}'>Update</a>
+                </td>
+            </tr>
+         {% endfor %}   
+    </table>
+    {% endif %}
+
+
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/Non_Linear" method="POST">
+            <input type="int" name="year"  value="Enter Year">
+            <input type="submit" value="Predict ">  
+        </form>
+    </div>
+ 
+</div>
+{%  endblock %}

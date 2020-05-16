@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Data Science</title>
+{%  endblock %}
+
+{% block body %}
+<div class='content'>
+<h1>DATA SCIENCE MODEL EXPLORER</h1> 
+<p>Data science is an inter-disciplinary field that uses scientific methods, processes, algorithms and systems to extract knowledge and insights from many structural and unstructured data. Data science is related to data mining, deep learning and big data.</p>
+<img src="static/images/Data_Science.png" class="center">
+<p>Feel free to use this explorer to try out different models</p>   
+<h1>Choose your Model</h1>     
+<div class='form'>
+    <form action="/" method="POST">
+        <select id="model" name="model">
+            <option value="Linear">Linear Regression</option>
+            <option value="Non_Linear">Non Linear Regression</option>
+            <option value="Logistic">Logistic Regression</option>
+            <option value="Decision_Tree">Decision Tree</option>
+            <option value="SVM_model">SVM Model</option>
+            
+        </select>    
+        <input type="submit" value="Choose Model">
+    </form>
+</div>
+</div>
+{%  endblock %}

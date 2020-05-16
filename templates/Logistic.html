@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Model</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Logistic Regression</h1>
+    <p>Logistic regression is a statistical model that in its basic form uses a logistic function to model a binary dependent variable, although many more complex extensions exist. In regression analysis, logistic regression (or logit regression) is estimating the parameters of a logistic model (a form of binary regression).</p>
+    <p>Telco Churn is a hypothetical data file that concerns a telecommunications company's efforts to reduce turnover in its customer base. Each case corresponds to a separate customer and it records various demographic and service usage information.</p>
+    <pre>Inputs
+        -tenure    range(1-72)
+        -age       range(19-76)
+        -address   range(0-42) 
+        -income    range(10-1700)
+        -education range(1-5)
+        -employ    range(0-44)
+        -equip     range(0-1)  
+    </pre>
+    <pre>Outputs Churn Value 0-1</pre>
+    {% if elements|length < 1 %}
+    <h4>There are no entries</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Tenure</th>
+            <th>Age</th>
+            <th>Address</th>
+            <th>Income</th>
+            <th>Education</th>
+            <th>Employed</th>
+            <th>Equipped</th>
+            <th>Churn</th>
+
+        </tr>
+        {% for ele in elements %}
+            <tr>
+                <td>{{ele.tenure}}</td>
+                <td>{{ele.age}}</td>
+                <td>{{ele.address}}</td>
+                <td>{{ele.income}}</td>
+                <td>{{ele.education}}</td>
+                <td>{{ele.employ}}</td>
+                <td>{{ele.equip}}</td>
+                <td>{{ele.churn}}</td>
+
+                <td>
+                    <a href='/Logistic/delete/{{ele.id}}'>Delete</a>
+                    <br>
+                    <a href='/Logistic/update/{{ele.id}}'>Update</a>
+                </td>
+            </tr>
+         {% endfor %}   
+    </table>
+    {% endif %}
+
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/Logistic" method="POST">
+            <input type="int" name="tenure"  value="Enter Tenure">
+            <input type="int" name="age"  value="Enter Age">
+            <input type="int" name="address"  value="Enter Address">
+            <input type="int" name="income"  value="Enter Income">
+            <input type="int" name="education"  value="Enter Education">
+            <input type="bool" name="employ"  value="Are you employed (0,1)">
+            <input type="int" name="equip"  value="Are you equipped (0,1)">
+            <input type="submit" value="Predict ">
+        </form>
+    </div>
+ 
+</div>
+{%  endblock %}

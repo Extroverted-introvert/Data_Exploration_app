@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Non Linear Update</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Update Entry </h1>
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/Non_Linear/update/{{entry_to_update.id}}" method="POST">
+            <input type="int" name="year"  value="Enter Year">
+            <input type="submit" value="Update_Prediction ">  
+        </form>
+    </div>
+</div>
+{%  endblock %}

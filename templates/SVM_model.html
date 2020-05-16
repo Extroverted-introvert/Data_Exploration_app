@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Model</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>SVM Model</h1>
+    <p>In machine learning, support-vector machines (SVMs, also support-vector networks[1]) are supervised learning models with associated learning algorithms that analyze data used for classification and regression analysis. Given a set of training examples, each marked as belonging to one or the other of two categories, an SVM training algorithm builds a model that assigns new examples to one category or the other, making it a non-probabilistic binary linear classifier (although methods such as Platt scaling exist to use SVM in a probabilistic classification setting). A SVM model is a representation of the examples as points in space, mapped so that the examples of the separate categories are divided by a clear gap that is as wide as possible. New examples are then mapped into that same space and predicted to belong to a category based on the side of the gap on which they fall. </p>
+    <p>The example is based on a dataset that is publicly available from the UCI Machine Learning Repository (Asuncion and Newman, 2007)[http://mlearn.ics.uci.edu/MLRepository.html]. The dataset consists of several hundred human cell sample records, each of which contains the values of a set of cell characteristics. The fields in each record are:</p>
+    <img src="static/images/SVM.png" class="center"> 
+    <pre>Inputs
+        -clump       range(0-10)
+        -unifsize    range(0-10)
+        -unifshape   range(0-10)
+        -margadh     range(0-10)
+        -singepisize range(0-10)
+        -barenuc     range(0-10)
+        -blandchrom  range(0-10)
+        -normnucl    range(0-10)
+        -mit         range(0-10)
+    </pre>
+    <pre>Outputs Cell_Class (Benign:2,Malignant:4)</pre>
+    {% if elements|length < 1 %}
+    <h4>There are no entries</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Clump</th>
+            <th>Unif Size</th>
+            <th>Unif Shape</th>
+            <th>Mar Agdh</th>
+            <th>Sing Epi Size</th>
+            <th>Bare Nucleus</th>
+            <th>Bland Chrom</th>
+            <th>Norm Nucleus</th>
+            <th>Mit</th>
+            <th>Cell-Class</th>
+            <th>Actions</th>
+            
+        </tr>
+        {% for ele in elements %}
+            <tr>
+                <td>{{ele.clump}}</td>
+                <td>{{ele.unifsize}}</td>
+                <td>{{ele.unifshape}}</td>
+                <td>{{ele.margadh}}</td>
+                <td>{{ele.singepisize}}</td>
+                <td>{{ele.barenuc}}</td>
+                <td>{{ele.blandchrom}}</td>
+                <td>{{ele.normnucl}}</td>
+                <td>{{ele.mit}}</td>
+                <td>{{ele.cell_class}}</td>
+
+                <td>
+                    <a href='/SVM_model/delete/{{ele.id}}'>Delete</a>
+                    <br>
+                    <a href='/SVM_model/update/{{ele.id}}'>Update</a>
+                </td>
+            </tr>
+         {% endfor %}   
+    </table>
+    {% endif %}
+
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/SVM_model" method="POST">
+            <input type="int" name="clump"  value="Enter Clump">
+            <input type="int" name="unifsize"  value="Enter Unifsize">
+            <input type="int" name="unifshape"  value="Enter Unifshape">
+            <input type="int" name="margadh"  value="Enter Marg Adh">
+            <input type="bool" name="singepisize"  value="Enter Sing Epi Size">
+            <input type="int" name="barenuc"  value="Enter Bare Nucleus">
+            <input type="int" name="blandchrom"  value="Enter BlandChrom">
+            <input type="int" name="normnucl"  value="Enter Norm Nucleus">
+            <input type="int" name="mit"  value="Enter Mit">
+            <input type="submit" value="Predict ">
+        </form>
+    </div>
+ 
+</div>
+{%  endblock %}

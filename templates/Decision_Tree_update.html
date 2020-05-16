@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Decision Tree Update</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Update Entry </h1>
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/Decision_Tree/update/{{entry_to_update.id}}" method="POST">
+            <input type="int" name="age"  value="Enter Age">
+            <input type="int" name="sex"  value="Enter Sex">
+            <input type="int" name="bp"  value="Enter BP">
+            <input type="int" name="cholestrol"  value="Enter Cholestrol">
+            <input type="bool" name="na_to_k"  value="Enter Sodium to Potassium">
+            <input type="submit" value="Predict ">
+        </form>
+    </div>
+
+    
+</div>
+{%  endblock %}

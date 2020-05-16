@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Model</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Linear Regression</h1>
+    <p>In statistics, linear regression is a linear approach to modeling the relationship between a scalar response (or dependent variable) and one or more explanatory variables (or independent variables). The case of one explanatory variable is called simple linear regression.</p>
+    <p>We have downloaded a fuel consumption dataset, `FuelConsumption.csv`, which contains model-specific fuel consumption ratings and estimated carbon dioxide emissions for new light-duty vehicles for retail sale in Canada. <br>[Dataset source](http://open.canada.ca/data/en/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64)</p>
+    <p>Input value of EngineSize (range 1-7) and the model Outputs estimated Co2Emission</p> 
+    <img src="static/images/Linear.png" class="center"> 
+    {% if elements|length < 1 %}
+    <h4>There are no entries</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Enginesize</th>
+            <th>Predicted Co2</th>
+            <th>Action</th>
+        </tr>
+        {% for ele in elements %}
+            <tr>
+                <td>{{ele.engine}}</td>
+                <td>{{ele.co2}}</td>
+                <td>
+                    <a href='/Linear/delete/{{ele.id}}'>Delete</a>
+                    <br>
+                    <a href='/Linear/update/{{ele.id}}'>Update</a>
+                </td>
+            </tr>
+         {% endfor %}   
+    </table>
+    {% endif %} 
+    
+
+    
+    
+    
+    
+    <h2>Enter Values: </h2>
+    <div class='form'>
+        <form action="/Linear" method="POST">
+            <input type="int" name="EngineSize"  value="Enter EngineSize">
+            <input class='sub_btn' type="submit" value="Predict ">
+        </form>
+    </div>
+ 
+</div>
+{%  endblock %}

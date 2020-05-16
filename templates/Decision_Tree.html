@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Model</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Decision Tree</h1>
+    <p>A decision tree is a flowchart-like structure in which each internal node represents a "test" on an attribute (e.g. whether a coin flip comes up heads or tails), each branch represents the outcome of the test, and each leaf node represents a class label (decision taken after computing all attributes).</p>
+    <p>Suppose each patient responded to one of 5 medications, Drug A, Drug B, Drug c, Drug X and Y. We build a model to find out which drug might be appropriate for a future patient with the same illness. The feature sets of this dataset are Age, Sex, Blood Pressure, and Cholesterol of patients, and the target is the drug that each patient responded to.
+    It is a sample of binary classifier, and you can use the training part of the dataset to build a decision tree, and then use it to predict the class of a unknown patient, or to prescribe it to a new patient.</p>
+    <img src="static/images/drugtree.png" class="center" >
+    <pre>Inputs
+        -age        range(15-74)
+        -sex        range(0-1)
+        -bp         (0:Low,1:Normal,2:High)
+        -cholestrol (0:Normal,1:High)
+        -na_to_k    range(6-38)
+    </pre>
+    {% if elements|length < 1 %}
+    <h4>There are no entries</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Age</th>
+            <th>Sex</th>
+            <th>BP</th>
+            <th>Cholestrol</th>
+            <th>Sodium to Potassium</th>
+            <th>Drug Suggested</th>
+            <th>Actions</th>
+            
+        </tr>
+        {% for ele in elements %}
+            <tr>
+                <td>{{ele.age}}</td>
+                <td>{{ele.sex}}</td>
+                <td>{{ele.bp}}</td>
+                <td>{{ele.cholestrol}}</td>
+                <td>{{ele.na_to_k}}</td>
+                <td>{{ele.drug}}</td>
+
+                <td>
+                    <a href='/Decision_Tree/delete/{{ele.id}}'>Delete</a>
+                    <br>
+                    <a href='/Decision_Tree/update/{{ele.id}}'>Update</a>
+                </td>
+            </tr>
+         {% endfor %}   
+    </table>
+    {% endif %}
+
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/Decision_Tree" method="POST">
+            <input type="int" name="age"  value="Enter Age">
+            <input type="int" name="sex"  value="Enter Sex">
+            <input type="int" name="bp"  value="Enter BP">
+            <input type="int" name="cholestrol"  value="Enter Cholestrol">
+            <input type="bool" name="na_to_k"  value="Enter Sodium to Potassium">
+            <input type="submit" value="Predict ">
+        </form>
+    </div>
+ 
+</div>
+{%  endblock %}
