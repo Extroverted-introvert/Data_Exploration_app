@@ -17,8 +17,8 @@ import pickle
 
 #from flask_sqlalchemy import SQLAlchemy
 app=Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI']='postgres://xmswjltwtgrzhm:73c8e46bdf06302bc30ede273c58f22a9cc3280cb387a5146c08f9d42512114d@ec2-34-193-232-231.compute-1.amazonaws.com:5432/d3q62fgfljcc4a'
-app.config['SQLALCHEMY_DATABASE_URI']='postgres://postgres:parth@123@localhost/postgres'
+app.config['SQLALCHEMY_DATABASE_URI']='postgres://xmswjltwtgrzhm:73c8e46bdf06302bc30ede273c58f22a9cc3280cb387a5146c08f9d42512114d@ec2-34-193-232-231.compute-1.amazonaws.com:5432/d3q62fgfljcc4a'
+#app.config['SQLALCHEMY_DATABASE_URI']='postgres://postgres:parth@123@localhost/postgres'
 db = SQLAlchemy(app)
 
 
