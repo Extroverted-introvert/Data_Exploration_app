@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Random Forest Update</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Update Entry </h1>
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/Random_forest/update/{{entry_to_update.id}}" method="POST">
+            <input type="int" name="clump"  value="Enter Clump">
+            <input type="int" name="unifsize"  value="Enter Unifsize">
+            <input type="int" name="unifshape"  value="Enter Unifshape">
+            <input type="int" name="margadh"  value="Enter Marg Adh">
+            <input type="bool" name="singepisize"  value="Enter Sing Epi Size">
+            <input type="int" name="barenuc"  value="Enter Bare Nucleus">
+            <input type="int" name="blandchrom"  value="Enter BlandChrom">
+            <input type="int" name="normnucl"  value="Enter Norm Nucleus">
+            <input type="int" name="mit"  value="Enter Mit">
+            <input type="submit" value="Predict ">
+        </form>
+    </div>
+</div>
+{%  endblock %}

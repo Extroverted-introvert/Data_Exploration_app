@@ -8,6 +8,7 @@ from Linear_reg import Linear_Regression
 from Non_Linear import Non_Linear_Regression
 from Logistic_Reg import Logistic_Regression
 from Decision_Tree import Decision_Tree
+from Random_forest import Random_forest
 from SVM import SVM_model
 from sklearn import preprocessing
 from sklearn.linear_model import LogisticRegression
@@ -16,7 +17,8 @@ import pickle
 
 #from flask_sqlalchemy import SQLAlchemy
 app=Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']='postgres://xmswjltwtgrzhm:73c8e46bdf06302bc30ede273c58f22a9cc3280cb387a5146c08f9d42512114d@ec2-34-193-232-231.compute-1.amazonaws.com:5432/d3q62fgfljcc4a'
+#app.config['SQLALCHEMY_DATABASE_URI']='postgres://xmswjltwtgrzhm:73c8e46bdf06302bc30ede273c58f22a9cc3280cb387a5146c08f9d42512114d@ec2-34-193-232-231.compute-1.amazonaws.com:5432/d3q62fgfljcc4a'
+app.config['SQLALCHEMY_DATABASE_URI']='postgres://postgres:parth@123@localhost/postgres'
 db = SQLAlchemy(app)
 
 
@@ -114,6 +116,34 @@ class SVM_table(db.Model):
         self.mit=mit
         self.cell_class=cell_class
 
+class Random_forest_table(db.Model):
+    __tablename__='Random_forest'
+    id=db.Column(db.Integer, primary_key=True)
+    clump=db.Column(db.Float,nullable=False)
+    unifsize=db.Column(db.Float,nullable=False)
+    unifshape=db.Column(db.Float,nullable=False)
+    margadh=db.Column(db.Float,nullable=False)
+    singepisize=db.Column(db.Float,nullable=False)
+    barenuc=db.Column(db.Float,nullable=False)
+    blandchrom=db.Column(db.Float,nullable=False)
+    normnucl=db.Column(db.Float,nullable=False)
+    mit=db.Column(db.Float,nullable=False)
+    cell_class=db.Column(db.Float,nullable=False)
+        
+    def _init__(clump,unifsize,unifshape,margadh,singepisize,barenuc,blandchrom,normnucl,mit,cell_class):
+        self.id=id
+        self.clump=clump
+        self.unifsize=unifsize
+        self.unifshape=unifshape
+        self.margadh=margadh
+        self.singepisize=singepisize
+        self.barenuc=barenuc
+        self.blandchrom=blandchrom
+        self.normnucl=normnucl
+        self.mit=mit
+        self.cell_class=cell_class
+
+
 
 @app.route('/', methods=['POST','GET'])
 
@@ -130,6 +160,8 @@ def index():
             return redirect('/Decision_Tree')
         if model=='SVM_model':
             return redirect('/SVM_model')                
+        if model=='Random_forest':
+            return redirect('/Random_forest')
         else:
             return ('Index Error')
     else:
@@ -460,6 +492,86 @@ def get_update5(id):
 
     else:
         return render_template('SVM_model_update.html',entry_to_update=entry_to_update)           
+
+@app.route('/Random_forest',methods=['POST','GET'])
+
+def Model6():
+    if request.method=='POST':
+        clump=float(request.form['clump'])
+        unifsize=float(request.form['unifsize'])
+        unifshape=float(request.form['unifshape'])
+        margadh=float(request.form['margadh'])
+        singepisize=float(request.form['singepisize'])
+        barenuc=float(request.form['barenuc'])
+        blandchrom=float(request.form['blandchrom'])
+        normnucl=float(request.form['normnucl'])
+        mit=float(request.form['mit'])
+        payload=[clump,unifsize,unifshape,margadh,singepisize,barenuc,blandchrom,normnucl,mit]
+        payload=np.array(payload)
+        #print(payload)
+
+        try:
+            cell_class = Random_forest(payload)
+            #print(cell_class)
+        except:
+            return 'Please enter Float' 
+
+        entry=Random_forest_table(clump=clump,unifsize=unifsize,unifshape=unifshape,margadh=margadh,singepisize=singepisize,barenuc=barenuc,blandchrom=blandchrom,normnucl=normnucl,mit=mit,cell_class=cell_class)
+
+        try:
+            db.session.add(entry)
+            print('Clear')
+            db.session.commit()
+            print('Clear')
+            return redirect('/Random_forest')
+        except:
+            #print(year)
+            return 'Database Error5'      
+    else:
+        elements=Random_forest_table.query.order_by(Random_forest_table.id).all()
+        return render_template('Random_forest.html',elements=elements)
+
+@app.route('/Random_forest/delete/<int:id>')
+
+def delete6(id):
+    entry_to_delete =Random_forest_table.query.get_or_404(id)
+
+    try:
+        db.session.delete(entry_to_delete)
+        db.session.commit()
+        return redirect('/Random_forest')
+    except:
+        return "Contact DBA"             
+
+
+@app.route('/Random_forest/update/<int:id>',methods=['POST','GET'])
+
+def get_update6(id):
+    entry_to_update=Random_forest_table.query.get_or_404(id)
+
+    if request.method=='POST':
+        entry_to_update.clump=float(request.form['clump'])
+        entry_to_update.unifsize=float(request.form['unifsize'])
+        entry_to_update.unifshape=float(request.form['unifshape'])
+        entry_to_update.margadh=float(request.form['margadh'])
+        entry_to_update.singepisize=float(request.form['singepisize'])
+        entry_to_update.barenuc=float(request.form['barenuc'])
+        entry_to_update.blandchrom=float(request.form['blandchrom'])
+        entry_to_update.normnucl=float(request.form['normnucl'])
+        entry_to_update.mit=float(request.form['mit'])
+        payload=[entry_to_update.clump,entry_to_update.unifsize,entry_to_update.unifshape,entry_to_update.margadh,entry_to_update.singepisize,entry_to_update.barenuc,entry_to_update.blandchrom,entry_to_update.normnucl,entry_to_update.mit]
+        payload=np.array(payload)
+        entry_to_update.cell_class=Random_forest(payload)
+
+        try:
+            db.session.commit()
+            return redirect('/Random_forest')
+        except:
+            return 'Contact DBA'
+
+    else:
+        return render_template('Random_forest_update.html',entry_to_update=entry_to_update)           
+
 
 if __name__  == '__main__':
     app.run(debug=True)
