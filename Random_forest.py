@@ -6,6 +6,5 @@ def Random_forest(payload):
     tree = pickle.load(open('Random_forest.sav','rb'))
     X_test=payload
     prediction=tree.predict(X_test.reshape(1,-1))
-    return prediction[0]
+    return (int(prediction[0]))
 
- 
