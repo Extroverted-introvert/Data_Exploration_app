@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/home/parth/Projects/Data Science/env_data/bin/python" "$0" "$@"
+'''exec' "/home/parth/Projects/Data_Science/env_data/bin/python" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re
