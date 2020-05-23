@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Model</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>KNN Model</h1>
+    <p>K-Nearest Neighbors (KNN) is one of the simplest algorithms used in Machine Learning for regression and classification problem. KNN algorithms use data and classify new data points based on similarity measures (e.g. distance function). Classification is done by a majority vote to its neighbors.</p>
+    <p>A telecommunications provider has segmented its customer base by service usage patterns, categorizing the customers into four groups. If demographic data can be used to predict group membership, the company can customize offers for individual prospective customers. It is a classification problem. That is, given the dataset, with predefined labels, we need to build a model to be used to predict class of a new or unknown case.</p>
+    <img src="static/images/KNN.png" class="center"> 
+    <pre>Inputs
+        -region       
+        -tenure    
+        -age   
+        -marital     
+        -saddress
+        -income     
+        -education  
+        -employ    
+    </pre>
+    <pre>Outputs Customer_Class </pre>
+    {% if elements|length < 1 %}
+    <h4>There are no entries</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Region</th>
+            <th>Tenure</th>
+            <th>Age</th>
+            <th>Marital</th>
+            <th>Address</th>
+            <th>Income</th>
+            <th>Education</th>
+            <th>Employ</th>
+            <th>Retire</th>
+            <th>Gender</th>
+            <th>Reside</th>
+            <th>Class</th>
+                        
+        </tr>
+        {% for ele in elements %}
+            <tr>
+                <td>{{ele.region}}</td>
+                <td>{{ele.tenure}}</td>
+                <td>{{ele.age}}</td>
+                <td>{{ele.marital}}</td>
+                <td>{{ele.saddress}}</td>
+                <td>{{ele.income}}</td>
+                <td>{{ele.education}}</td>
+                <td>{{ele.employ}}</td>
+                <td>{{ele.retire}}</td>
+                <td>{{ele.gender}}</td>
+                <td>{{ele.reside}}</td>
+                <td>{{ele.class_knn}}</td>
+
+                <td>
+                    <a href='/KNN/delete/{{ele.id}}'>Delete</a>
+                    <br>
+                    <a href='/KNN/update/{{ele.id}}'>Update</a>
+                </td>
+            </tr>
+         {% endfor %}   
+    </table>
+    {% endif %}
+
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/KNN" method="POST">
+            <input type="int" name="region"  placeholder="Enter Region">
+            <input type="int" name="tenure"  placeholder="Enter Tenure">
+            <input type="int" name="age"  placeholder="Enter Age">
+            <input type="int" name="marital"  placeholder="Enter Marital">
+            <input type="bool" name="address"  placeholder="Enter Address">
+            <input type="int" name="income"  placeholder="Enter Income">
+            <input type="int" name="education"  placeholder="Enter Education">
+            <input type="int" name="employ"  placeholder="Enter Employ">
+            <input type="int" name="retire"  placeholder="Enter Retire">
+            <input type="int" name="gender"  placeholder="Enter Gender">
+            <input type="int" name="reside"  placeholder="Enter Reside">
+            <input type="submit" value="Predict ">
+        </form>
+    </div>
+ 
+</div>
+{%  endblock %}

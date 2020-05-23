@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>DBSCAN Update</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Update Entry </h1>
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/DBSCAN/update/{{entry_to_update.id}}" method="POST">
+            <input type="int" name="x_cood"  placeholder="Enter x_coordinate">
+            <input type="int" name="y_cood"  placeholder="Enter y_coordinate">
+            <input type="int" name="Temp_mean"  placeholder="Enter Temp_mean">
+            <input type="int" name="Temp_max"  placeholder="Enter Temp_max">
+            <input type="bool" name="Temp_min"  placeholder="Enter Temp_min">
+            <input type="submit" value="Predict ">  
+        </form>
+    </div>
+</div>
+{%  endblock %}

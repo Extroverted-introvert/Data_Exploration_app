@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>KNN Model Update</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Update Entry </h1>
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/KNN/update/{{entry_to_update.id}}" method="POST">
+            <input type="int" name="region"  placeholder="Enter Region">
+            <input type="int" name="tenure"  placeholder="Enter Tenure">
+            <input type="int" name="age"  placeholder="Enter Age">
+            <input type="int" name="marital"  placeholder="Enter Marital">
+            <input type="bool" name="address"  placeholder="Enter Address">
+            <input type="int" name="income"  placeholder="Enter Income">
+            <input type="int" name="education"  placeholder="Enter Education">
+            <input type="int" name="employ"  placeholder="Enter Employ">
+            <input type="int" name="retire"  placeholder="Enter Retire">
+            <input type="int" name="gender"  placeholder="Enter Gender">
+            <input type="int" name="reside"  placeholder="Enter Reside">
+            <input type="submit" value="Predict ">
+        </form>
+    </div>
+</div>
+{%  endblock %}

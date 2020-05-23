@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Model</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>DBSCAN Model</h1>
+    <p>Density-Based Clustering refers to unsupervised learning methods that identify distinctive groups/clusters in the data, based on the idea that a cluster in data space is a contiguous region of high point density, separated from other such clusters by contiguous regions of low point density.</p>
+    <p>DBSCAN can be used here, for instance, to find the group of stations which show the same weather condition. As you can see, it not only finds different arbitrary shaped clusters, can find the denser part of data-centered samples by ignoring less-dense areas or noises.</p>
+    <img src="static/images/DBSCAN.png" class="center"> 
+    <pre>Inputs
+        -x_cood      
+        -y_cood    
+        -Temp_mean   
+        -Temp_max     
+        -Temp_min     
+    </pre>
+    <pre>Outputs Station Class</pre>
+    {% if elements|length < 1 %}
+    <h4>There are no entries</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>x_cood</th>
+            <th>y_cood</th>
+            <th>Temp_meaned</th>
+            <th>Temp_max</th>
+            <th>Temp_min</th>
+            <th>Class</th>
+                        
+        </tr>
+        {% for ele in elements %}
+            <tr>
+                <td>{{ele.x_cood}}</td>
+                <td>{{ele.y_cood}}</td>
+                <td>{{ele.Temp_mean}}</td>
+                <td>{{ele.Temp_max}}</td>
+                <td>{{ele.Temp_min}}</td>
+                <td>{{ele.class_DBSCAN}}</td>
+
+                <td>
+                    <a href='/DBSCAN/delete/{{ele.id}}'>Delete</a>
+                    <br>
+                    <a href='/DBSCAN/update/{{ele.id}}'>Update</a>
+                </td>
+            </tr>
+         {% endfor %}   
+    </table>
+    {% endif %}
+
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/DBSCAN" method="POST">
+            <input type="int" name="x_cood"  placeholder="Enter x_coordinate">
+            <input type="int" name="y_cood"  placeholder="Enter y_coordinate">
+            <input type="int" name="Temp_mean"  placeholder="Enter Temp_mean">
+            <input type="int" name="Temp_max"  placeholder="Enter Temp_max">
+            <input type="bool" name="Temp_min"  placeholder="Enter Temp_min">
+            <input type="submit" value="Predict ">
+        </form>
+    </div>
+ 
+</div>
+{%  endblock %}

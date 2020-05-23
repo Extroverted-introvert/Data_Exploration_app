@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Model</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>KMeans Model</h1>
+    <p>k-means clustering is a method of vector quantization, originally from signal processing, that aims to partition n observations into k clusters in which each observation belongs to the cluster with the nearest mean, serving as a prototype of the cluster.</p>
+    <p>you have a customer dataset, and you need to apply customer segmentation on this historical data. Customer segmentation is the practice of partitioning a customer base into groups of individuals that have similar characteristics. It is a significant strategy as a business can target these specific groups of customers and effectively allocate marketing resources. For example, one group might contain customers who are high-profit and low-risk, that is, more likely to purchase products, or subscribe for a service. A business task is to retaining those customers. Another group might include customers from non-profit organizations.</p>
+    <img src="static/images/Kmeans.png" class="center"> 
+    <pre>Inputs
+        -age      
+        -education   
+        -years_employ  
+        -income    
+        -card_debt
+        -other_debt    
+        -defaulted  
+        -income_debt_ratio   
+    </pre>
+    <pre>Outputs Customer Class </pre>
+    {% if elements|length < 1 %}
+    <h4>There are no entries</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Age</th>
+            <th>Education</th>
+            <th>Years_employed</th>
+            <th>Income</th>
+            <th>Card_debt</th>
+            <th>Other_debte</th>
+            <th>Defaulted</th>
+            <th>Income_debt_ratio</th>
+            <th>Class</th>
+                        
+        </tr>
+        {% for ele in elements %}
+            <tr>
+                <td>{{ele.age}}</td>
+                <td>{{ele.education}}</td>
+                <td>{{ele.years_employ}}</td>
+                <td>{{ele.income}}</td>
+                <td>{{ele.card_debt}}</td>
+                <td>{{ele.other_debt}}</td>
+                <td>{{ele.defaulted}}</td>
+                <td>{{ele.income_debt_ratio}}</td>
+                <td>{{ele.class_kmean}}</td>
+
+                <td>
+                    <a href='/Kmeans/delete/{{ele.id}}'>Delete</a>
+                    <br>
+                    <a href='/Kmeans/update/{{ele.id}}'>Update</a>
+                </td>
+            </tr>
+         {% endfor %}   
+    </table>
+    {% endif %}
+
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/Kmeans" method="POST">
+            <input type="int" name="age"  placeholder="Enter age">
+            <input type="int" name="education"  placeholder="Enter Education">
+            <input type="int" name="years_employ"  placeholder="Enter Years_employed">
+            <input type="int" name="income"  placeholder="Enter Income">
+            <input type="bool" name="card_debt"  placeholder="Enter Card_debt">
+            <input type="int" name="other_debt"  placeholder="Enter Other_debt">
+            <input type="int" name="defaulted"  placeholder="Enter Defaulted">
+            <input type="int" name="income_debt_ratio"  placeholder="Enter Income_debt_ratio">
+            <input type="submit" value="Predict ">
+        </form>
+    </div>
+ 
+</div>
+{%  endblock %}

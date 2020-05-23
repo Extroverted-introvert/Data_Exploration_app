@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Kmeans Model Update</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Update Entry </h1>
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/Kmeans/update/{{entry_to_update.id}}" method="POST">
+            <input type="int" name="age"  placeholder="Enter age">
+            <input type="int" name="education"  placeholder="Enter Education">
+            <input type="int" name="years_employ"  placeholder="Enter Years_employed">
+            <input type="int" name="income"  placeholder="Enter Income">
+            <input type="bool" name=card_debt"  placeholder="Enter Card_debt">
+            <input type="int" name="other_debt"  placeholder="Enter Other_debt">
+            <input type="int" name="defaulted"  placeholder="Enter Defaulted">
+            <input type="int" name="income_debt_ratio"  placeholder="Enter Income_debt_ratio">
+            <input type="submit" value="Predict ">
+        </form>
+    </div>
+</div>
+{%  endblock %}
