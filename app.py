@@ -14,6 +14,7 @@ from pca import PCA
 from KNN import KNN
 from Kmeans import Kmeans
 from DBSCAN import DBSCAN
+from Naive_Bayes import Naive_Bayes
 from sklearn import preprocessing
 from sklearn.linear_model import LogisticRegression
 import pickle
@@ -62,7 +63,7 @@ class Logistic_table(db.Model):
     equip=db.Column(db.Float,nullable=False)
     churn=db.Column(db.Float,nullable=False)
         
-    def _init__(id,age,sex,bp,cholestrol,na_to_k,drug):
+    def _init__(id,tenure,age,address,income,education,employ,equip,churn):
         self.id=id
         self.tenure=tenure
         self.age=age
@@ -249,6 +250,26 @@ class DBSCAN_table(db.Model):
         self.Temp_max=Temp_max
         self.class_DBSCAN=class_DBSCAN
 
+class Naive_Bayes_table(db.Model):
+    __tablename__='Naive_Bayes'
+    id=db.Column(db.Integer, primary_key=True)
+    tenure=db.Column(db.Float,nullable=False)
+    age=db.Column(db.Float,nullable=False)
+    address=db.Column(db.Float,nullable=False)
+    income=db.Column(db.Float,nullable=False)
+    education=db.Column(db.Float,nullable=False)
+    employ=db.Column(db.Float,nullable=False)
+    churn=db.Column(db.Float,nullable=False)
+        
+    def _init__(id,tenure,age,address,income,education,employ,churn):
+        self.id=id
+        self.tenure=tenure
+        self.age=age
+        self.address=address
+        self.income=income
+        self.education=education
+        self.employ=employ
+        self.churn=churn
 
 
 @app.route('/', methods=['POST','GET'])
@@ -275,7 +296,9 @@ def index():
         if model=='Kmeans':
             return redirect('/Kmeans')
         if model=='DBSCAN':
-            return redirect('/DBSCAN')                
+            return redirect('/DBSCAN')
+        if model=='Naive_Bayes':
+            return redirect('/Naive_Bayes')                    
         else:
             return ('Index Error')
     else:
@@ -992,6 +1015,75 @@ def get_update10(id):
 
     else:
         return render_template('DBSCAN_update.html',entry_to_update=entry_to_update)           
+
+@app.route('/Naive_Bayes',methods=['POST','GET'])
+
+def Model11():
+    if request.method=='POST':
+        tenure=float(request.form['tenure'])
+        age=float(request.form['age'])
+        address=float(request.form['address'])
+        income=float(request.form['income'])
+        education=float(request.form['education'])
+        employ=float(request.form['employ'])
+        payload=[tenure,age,address,income,education,employ]
+        payload=np.array(payload)
+
+        try:
+            churn = Naive_Bayes(payload)
+        except:
+            return 'Please enter Float' 
+
+        entry=Naive_Bayes_table(tenure=tenure,age=age,address=address,income=income,education=education,employ=employ,churn=churn)
+
+        try:
+            db.session.add(entry)
+            db.session.commit()
+            return redirect('/Naive_Bayes')
+        except:
+            #print(year)
+            return 'Database Error11'      
+    else:
+        elements=Naive_Bayes_table.query.order_by(Naive_Bayes_table.id).all()
+        return render_template('Naive_Bayes.html',elements=elements)
+
+@app.route('/Naive_Bayes/delete/<int:id>')
+
+def delete11(id):
+    entry_to_delete =Naive_Bayes_table.query.get_or_404(id)
+
+    try:
+        db.session.delete(entry_to_delete)
+        db.session.commit()
+        return redirect('/Naive_Bayes')
+    except:
+        return "Contact DBA"             
+
+
+@app.route('/Naive_Bayes/update/<int:id>',methods=['POST','GET'])
+
+def get_update11(id):
+    entry_to_update=Naive_Bayes_table.query.get_or_404(id)
+
+    if request.method=='POST':
+        entry_to_update.tenure=float(request.form['tenure'])
+        entry_to_update.age=float(request.form['age'])
+        entry_to_update.address=float(request.form['address'])
+        entry_to_update.income=float(request.form['income'])
+        entry_to_update.education=float(request.form['education'])
+        entry_to_update.employ=float(request.form['employ'])
+        payload=[entry_to_update.tenure,entry_to_update.age,entry_to_update.address,entry_to_update.income,entry_to_update.education,entry_to_update.employ]
+        payload=np.array(payload)
+        entry_to_update.churn=Naive_Bayes(payload)
+
+        try:
+            db.session.commit()
+            return redirect('/Naive_Bayes')
+        except:
+            return 'Contact DBA'
+
+    else:
+        return render_template('Naive_Bayes_update.html',entry_to_update=entry_to_update)           
 
 
 if __name__  == '__main__':

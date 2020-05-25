@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Model</title>
+{%  endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Naive Bayes</h1>
+    <p>In machine learning, naïve Bayes classifiers are a family of simple "probabilistic classifiers" based on applying Bayes' theorem with strong (naïve) independence assumptions between the features. They are among the simplest Bayesian network models.[1] But they could be coupled with Kernel density estimation and achieve higher accuracy levels.</p>
+    <p>Telco Churn is a hypothetical data file that concerns a telecommunications company's efforts to reduce turnover in its customer base. Each case corresponds to a separate customer and it records various demographic and service usage information.</p>
+    <pre>Inputs
+        -tenure    range(1-72)
+        -age       range(19-76)
+        -address   range(0-42) 
+        -income    range(10-1700)
+        -education range(1-5)
+        -employ    range(0-44)
+        -equip     range(0-1)  
+    </pre>
+    <pre>Outputs Churn Value 0-1</pre>
+    {% if elements|length < 1 %}
+    <h4>There are no entries</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Tenure</th>
+            <th>Age</th>
+            <th>Address</th>
+            <th>Income</th>
+            <th>Education</th>
+            <th>Employed</th>
+            <th>Churn</th>
+
+        </tr>
+        {% for ele in elements %}
+            <tr>
+                <td>{{ele.tenure}}</td>
+                <td>{{ele.age}}</td>
+                <td>{{ele.address}}</td>
+                <td>{{ele.income}}</td>
+                <td>{{ele.education}}</td>
+                <td>{{ele.employ}}</td>
+                <td>{{ele.churn}}</td>
+
+                <td>
+                    <a href='/Naive_Bayes/delete/{{ele.id}}'>Delete</a>
+                    <br>
+                    <a href='/Naive_Bayes/update/{{ele.id}}'>Update</a>
+                </td>
+            </tr>
+         {% endfor %}   
+    </table>
+    {% endif %}
+
+
+    <h2>Enter Values: </h2>
+
+    <div class='form'>
+        <form action="/Naive_Bayes" method="POST">
+            <input type="int" name="tenure"  placeholder="Enter Tenure">
+            <input type="int" name="age"  placeholder="Enter Age">
+            <input type="int" name="address"  placeholder="Enter Address">
+            <input type="int" name="income"  placeholder="Enter Income">
+            <input type="int" name="education"  placeholder="Enter Education">
+            <input type="bool" name="employ"  placeholder="Enter employent Status">
+            <input type="submit" value="Predict ">
+        </form>
+    </div>
+ 
+</div>
+{%  endblock %}
